@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class UserDaoJDBCImpl implements UserDao {
-    Connection connection = Util.getConnection();
+    private Connection connection = Util.getConnection();
 
     public UserDaoJDBCImpl() {
     }
@@ -54,6 +54,12 @@ public class UserDaoJDBCImpl implements UserDao {
                 ex.printStackTrace();
             }
             throw new RuntimeException(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -70,6 +76,12 @@ public class UserDaoJDBCImpl implements UserDao {
                 ex.printStackTrace();
             }
             throw new RuntimeException(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -98,6 +110,12 @@ public class UserDaoJDBCImpl implements UserDao {
                 ex.printStackTrace();
             }
             throw new RuntimeException(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         return users;
@@ -114,6 +132,12 @@ public class UserDaoJDBCImpl implements UserDao {
                 ex.printStackTrace();
             }
             throw new RuntimeException(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
