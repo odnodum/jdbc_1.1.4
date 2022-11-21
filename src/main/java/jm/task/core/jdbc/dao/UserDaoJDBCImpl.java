@@ -31,7 +31,8 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() {
         try {
             Statement statement = connection.createStatement();
-            statement.execute("DROP TABLE if EXISTS users");
+            final String SQL = "DROP TABLE if EXISTS users";
+            statement.execute(SQL);
         } catch (SQLException e) {
             System.out.println("Такой таблицы не существует");
         }
@@ -39,8 +40,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         try {
+            final String SQL = "INSERT INTO users (username, lastname, age) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("INSERT INTO users (username, lastname, age) VALUES (?, ?, ?)");
+                    connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
@@ -65,8 +67,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         try {
+            final String SQL = "DELETE FROM users WHERE id=?";
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("DELETE FROM users WHERE id=?");
+                    connection.prepareStatement(SQL);
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -91,8 +94,9 @@ public class UserDaoJDBCImpl implements UserDao {
 
         try {
             Statement statement = connection.createStatement();
+            final String SQL = "SELECT * FROM users";
             ResultSet resultSet;
-            resultSet = statement.executeQuery("SELECT * FROM users");
+            resultSet = statement.executeQuery(SQL);
 
             while (resultSet.next()) {
                 User user = new User();
@@ -124,7 +128,8 @@ public class UserDaoJDBCImpl implements UserDao {
     public void cleanUsersTable() {
         try {
             Statement statement = connection.createStatement();
-            statement.execute("DELETE FROM users");
+            final String SQL = "DELETE FROM users";
+            statement.execute(SQL);
         } catch (SQLException e) {
             try {
                 connection.rollback();
