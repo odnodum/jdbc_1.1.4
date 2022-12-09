@@ -9,7 +9,10 @@ import java.util.List;
 
 
 public class UserDaoJDBCImpl implements UserDao {
-    private Connection connection = Util.getConnection();
+    private static final String query = "CREATE TABLE if NOT EXISTS users "
+            + "(id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT, username VARCHAR(20) NOT NULL, "
+            + "lastname VARCHAR(20), age INT NOT NULL)";
+    private final Connection connection = Util.getConnection();
 
     public UserDaoJDBCImpl() {
     }
@@ -19,10 +22,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
         try {
             statement = connection.createStatement();
-            final String SQL = "CREATE TABLE if NOT EXISTS users "
-                    + "(id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT, username VARCHAR(20) NOT NULL, "
-                    + "lastname VARCHAR(20), age INT NOT NULL)";
-            statement.execute(SQL);
+            statement.execute(query);
         } catch (SQLException e) {
             System.out.println("Такая таблица уже существует");
         }
